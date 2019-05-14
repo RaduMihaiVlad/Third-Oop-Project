@@ -10,9 +10,19 @@
 using namespace std;
 
 int input;
-Shop s;
+//Shop s;
 ShoppingList<double> sList;
 
+Shop* Shop::instance = 0;
+
+Shop* Shop::getInstance() {
+    if (instance == 0) {
+        instance = new Shop();
+    }
+    return instance;
+}
+
+Shop* s = Shop::getInstance();
 
 void addBeer() {
     system("cls");
@@ -23,12 +33,12 @@ void addBeer() {
     string type;
     cin >> type;
     Product *p1 = new Beer(1.0, 1.0, brand, type);
-    if (s.exist(p1)) {
+    if (s->exist(p1)) {
         cout << "We already have this product in shop, so please add the quantity you want to supply:\n";
         int quantity;
         cin >> quantity;
         Product *p = new Beer(quantity, 1.0, brand, type);
-        s.add(p);
+        s->add(p);
         delete p; // doar adaug cantitatea in obiectul deja creat, iar asta devine inutil
     } else {
         cout << "Please add the quantity:\n";
@@ -38,19 +48,19 @@ void addBeer() {
         double pricePerBeer;
         cin >> pricePerBeer;
         Product *p = new Beer(quantity, pricePerBeer, brand, type);
-        s.add(p);
+        s->add(p);
     }
     delete p1;
 }
 void addCabbage() {
     system("cls");
     Product *p1 = new Cabbage(1.0, 1.0);
-    if (s.exist(p1)) {
+    if (s->exist(p1)) {
         cout << "We already have this product in shop, so please add the quantity you want to supply:\n";
         int quantity;
         cin >> quantity;
         Product *p = new Cabbage(quantity, 1.0);
-        s.add(p);
+        s->add(p);
         delete p;
     } else {
         cout << "Please add the quantity:\n";
@@ -60,7 +70,7 @@ void addCabbage() {
         double pricePerCabbage;
         cin >> pricePerCabbage;
         Product *p = new Cabbage(quantity, pricePerCabbage);
-        s.add(p);
+        s->add(p);
     }
     delete p1;
 }
@@ -70,12 +80,12 @@ void addFlour() {
     int quality;
     cin >> quality;
     Product *p1 = new Flour(1.0, 1.0, quality);
-    if (s.exist(p1)) {
+    if (s->exist(p1)) {
         cout << "We already have this product in shop, so please add the quantity you want to supply:\n";
         int quantity;
         cin >> quantity;
         Product *p = new Flour(quantity, 1.0, quality);
-        s.add(p);
+        s->add(p);
         delete p;
     } else {
         cout << "Please add the quantity:\n";
@@ -85,7 +95,7 @@ void addFlour() {
         double pricePerFlour;
         cin >> pricePerFlour;
         Product *p = new Flour(quantity, pricePerFlour, quality);
-        s.add(p);
+        s->add(p);
     }
     delete p1;
 }
@@ -95,12 +105,12 @@ void addPotato() {
     string type;
     cin >> type;
     Product *p1 = new Potato(1.0, 1.0, type);
-    if (s.exist(p1)) {
+    if (s->exist(p1)) {
         cout << "We already have this product in shop, so please add the quantity you want to supply:\n";
         int quantity;
         cin >> quantity;
         Product *p = new Potato(quantity, 1.0, type);
-        s.add(p);
+        s->add(p);
         delete p;
     } else {
         cout << "Please add the quantity:\n";
@@ -110,7 +120,7 @@ void addPotato() {
         double pricePerPotato;
         cin >> pricePerPotato;
         Product *p = new Potato(quantity, pricePerPotato, type);
-        s.add(p);
+        s->add(p);
     }
     delete p1;
 }
@@ -120,12 +130,12 @@ void addSpilledWine() {
     string type;
     cin >> type;
     Product *p1 = new SpilledWine(1.0, 1.0, type);
-    if (s.exist(p1)) {
+    if (s->exist(p1)) {
         cout << "We already have this product in shop, so please add the quantity you want to supply:\n";
         int quantity;
         cin >> quantity;
         Product *p = new SpilledWine(quantity, 1.0, type);
-        s.add(p);
+        s->add(p);
         delete p;
     } else {
         cout << "Please add the quantity:\n";
@@ -135,7 +145,7 @@ void addSpilledWine() {
         double pricePerSpilledWine;
         cin >> pricePerSpilledWine;
         Product *p = new SpilledWine(quantity, pricePerSpilledWine, type);
-        s.add(p);
+        s->add(p);
     }
     delete p1;
 }
@@ -145,14 +155,14 @@ void addToy() {
     string toyName;
     cin >> toyName;
     Product *p1 = new Toys(1.0, toyName);
-    if (s.exist(p1)) {
+    if (s->exist(p1)) {
         cout << "We already have this product in shop, you cannot supply with another one, please add something else:\n";
     } else {
         cout << "Please add the price/toy:\n";
         double pricePerToy;
         cin >> pricePerToy;
         Product *p = new Toys(pricePerToy, toyName);
-        s.add(p);
+        s->add(p);
     }
     delete p1;
 }
@@ -168,12 +178,12 @@ void addVarietyWine() {
     string country;
     cin >> country;
     Product *p1 = new VarietyWine(1.0, 1.0, type, collectingYear, country);
-    if (s.exist(p1)) {
+    if (s->exist(p1)) {
         cout << "We already have this product in shop, so please add the quantity you want to supply:\n";
         int quantity;
         cin >> quantity;
         Product *p = new VarietyWine(quantity, 1.0, type, collectingYear, country);
-        s.add(p);
+        s->add(p);
         delete p;
     } else {
         cout << "Please add the quantity:\n";
@@ -183,7 +193,7 @@ void addVarietyWine() {
         double pricePerVarietyWine;
         cin >> pricePerVarietyWine;
         Product *p = new VarietyWine(quantity, pricePerVarietyWine, type, collectingYear, country);
-        s.add(p);
+        s->add(p);
     }
     delete p1;
 }
@@ -274,7 +284,7 @@ void draw(int &currentState) {
         return;
     }
     if (currentState == 3) {
-        cout << s << "\n";
+        cout << *s << "\n";
         cout << "\n\n\n\n\n";
         cout << "0.Back\n";
         cin >> input;
@@ -315,7 +325,7 @@ void draw(int &currentState) {
         cin.get();
         cin.get(text, 999);
         cin.get();
-        Product *pBest = s.bestMatch(text);
+        Product *pBest = s->bestMatch(text);
         if (pBest->getName() == "None") {
             cout << "Sorry, we didn't find any match, please try again";
             Sleep(1700);

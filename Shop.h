@@ -19,13 +19,17 @@ private:
     int listCapacity;
     Product *failSearch;
 
-public:
-
     Shop() {
         listSize = 0;
         listOfProducts.clear();
         failSearch = new Product("None", 1, 1, "None");
     }
+
+    static Shop* instance;
+
+public:
+
+    static Shop* getInstance();
 
     ~Shop() {
         delete failSearch;
@@ -37,14 +41,14 @@ public:
 
 
 
-    Shop(Shop &s) {
+    /*Shop(Shop &s) {
         this->listSize = s.listSize;
         listOfProducts.clear();
         for (int i = 0; i < listSize; ++i) {
             listOfProducts.push_back(s.listOfProducts[i]);
         }
 
-    }
+    }*/
 
     void checkCurrentProduct(Product *p) {
         listOfProducts.push_back(p);
@@ -108,9 +112,9 @@ public:
                 pos = i;
             }
         }
-        for (int i = 0; i < 1000; ++i) {
+        /*for (int i = 0; i < 1000; ++i) {
             delete[] words[i];
-        }
+        }*/
         delete[] words;
         if (cntMax == 0) {
             return failSearch;
