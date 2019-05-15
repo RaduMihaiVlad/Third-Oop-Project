@@ -25,11 +25,17 @@ private:
         failSearch = new Product("None", 1, 1, "None");
     }
 
+    Shop(const Shop&);              // Don't Implement
+    Shop &operator=(const Shop&); // Don't implement
+
     static Shop* instance;
 
 public:
 
     static Shop* getInstance();
+
+    //Shop(const Shop&) = delete;
+    //Shop &operator=(const Shop&)  = delete;
 
     ~Shop() {
         delete failSearch;
@@ -38,17 +44,6 @@ public:
         }
         listOfProducts.clear();
     }
-
-
-
-    /*Shop(Shop &s) {
-        this->listSize = s.listSize;
-        listOfProducts.clear();
-        for (int i = 0; i < listSize; ++i) {
-            listOfProducts.push_back(s.listOfProducts[i]);
-        }
-
-    }*/
 
     void checkCurrentProduct(Product *p) {
         listOfProducts.push_back(p);
